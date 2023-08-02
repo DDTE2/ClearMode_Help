@@ -1,0 +1,210 @@
+# GUI
+from PyQt5.QtWidgets import QApplication
+from PyQt5 import QtWidgets, QtGui
+from PyQt5.QtCore import Qt
+import qdarktheme
+from GUI.Scripts.main_window import Ui_ClearMode_Window
+import sys
+# Данные о ПК
+from Algorithms.SystemData import System
+from os.path import abspath
+# Формат данных
+from json import dumps, loads
+# Работа с файлами
+from os import walk
+# Мои модули
+from Algorithms.AvatarList import Avatars
+
+
+class Window(QtWidgets.QMainWindow, Ui_ClearMode_Window):
+    def __init__(self):
+        # Наследуем классы интерфейса
+        QtWidgets.QMainWindow.__init__(self)
+        super(Ui_ClearMode_Window).__init__()
+
+        # Получаем директорию проекта
+        path = abspath(__file__).split('\\')[:-1]
+        self.path = '\\'.join(path)
+
+        # Загружаем пользовательские настройки
+        self.LoadSettings()
+
+        # Настриваем интерфейс
+        self.setupUi(self)
+        self.Load_run_settings()
+        self.SystemData()
+        self.setIcon()
+        self.Registration()
+        self.Authorization()
+
+    def SystemData(self):  # Отображаем системную информацию
+        data = System()  # Получаем информацию о ПК
+
+        # Выводим на экран системную информацию
+        if self.ShowSystemData_checkBox.isChecked():
+            self.OSname_label.setText('-')
+            self.MACadress_label.setText('-')
+            self.IParress_label.setText('-')
+        else:
+            system = data.system
+            self.OSname_label.setText(system['system'])
+            self.MACadress_label.setText(system['mac-adress'])
+            self.IParress_label.setText(system['ip-adress'])
+
+        self.ShowSystemData_checkBox.clicked.connect(self.SystemData)
+
+        # Выводим на экран список установленых лаунчеров
+        launchers = data.launchers
+        if launchers['Shararam']:
+            self.Shararam_Value_label.setText('Усановлен')
+        else:
+            self.Shararam_Value_label.setText('Не усановлен')
+        if launchers['private']:
+            self.Private_value_label.setText(launchers['private'])
+        else:
+            self.Private_value_label.setText('Не установлены')
+
+        # Выводим на экран список установленых программ
+        software = data.software
+        if software['WPE PRO']:
+            self.WPE_value_label.setText('Запущен')
+        else:
+            self.WPE_value_label.setText('Не запущен')
+        if software['Wireshark']:
+            self.Wireshark_value_label.setText('Запущен')
+        else:
+            self.Wireshark_value_label.setText('Не запущен')
+        if software['Charles Proxy']:
+            self.Charles_value_label.setText('Запущен')
+        else:
+            self.Charles_value_label.setText('Не запущен')
+        if software['Fiddler']:
+            self.Fiddler_value_label.setText('Запущен')
+        else:
+            self.Fiddler_value_label.setText('Не запущен')
+        if software['VPN']:
+            self.VPN_value_label.setText('Запущен')
+        else:
+            self.VPN_value_label.setText('Не запущен')
+
+    def Load_run_settings(self):  # Загружаем настройки запуска пользователя
+        # Настраиваем тему
+        if self.settings['run']['theam'] == 'dark':
+            self.DarkTheam_radioButton.setChecked(True)
+        else:
+            self.LighTheam_radioButton.setChecked(True)
+        # Настраиваем перезагрузку
+        if self.settings['run']['reboot']:
+            self.reboot_checkBox.setChecked(True)
+        else:
+            self.reboot_checkBox.setChecked(False)
+
+        self.Start_button.clicked.connect(self.ClearMode_run)
+
+    def ClearMode_run(self):
+        # Сораняем настройки
+        if self.LighTheam_radioButton.isChecked():
+            self.settings['run'] = {'theam': 'light'}
+        else:
+            self.settings['run'] = {'theam': 'dark'}
+
+        self.settings['run']['reboot'] = self.reboot_checkBox.isChecked()
+        self.SaveSattings()
+
+    def Registration(self):
+        # Назначаем функцию на кнопку показа паороля
+        self.ShowPassword_checkBox.clicked.connect(self.ShowPassword)
+        # Настраиваем кнопки выбора аватара
+        self.LeftPublicAvatar_button.clicked.connect(self.LeftPublicAvatar_choiser)
+        self.RightPublicAvatar_button.clicked.connect(self.RightPublicAvatar_choiser)
+        self.LeftSecretAvatar_button.clicked.connect(self.LeftSecretAvatar_choiser)
+        self.RightSecretAvatar_button.clicked.connect(self.RightSecretAvatar_choiser)
+
+    def Authorization(self):
+        self.ShowPassword2_checkBox.clicked.connect(self.ShowPassword2)
+
+    def ShowPassword(self):
+        if self.ShowPassword_checkBox.isChecked():
+            self.Password_input.setEchoMode(0)
+        else:
+            self.Password_input.setEchoMode(2)
+
+    def ShowPassword2(self):
+        if self.ShowPassword2_checkBox.isChecked():
+            self.Password_input_2.setEchoMode(0)
+        else:
+            self.Password_input_2.setEchoMode(2)
+
+    def LoadSettings(self):  # Загружаем настройки пользователя
+        try:
+            with open(self.path + '/data/settings.json', 'r') as file:
+                self.settings = loads(file.read())
+
+        except:
+            self.settings = {'run': {'theam': 'light', 'reboot': False}}
+
+    def SaveSattings(self):  # Сохраняем настройки пользователя
+        with open(self.path + '/data/settings.json', 'w') as file:
+            file.write(dumps(self.settings, indent=4))
+
+    def closeEvent(self, *args, **kwargs):  # Скрипты, выполняемые, после закрытия основного окна
+        super(QtWidgets.QMainWindow, self).closeEvent(*args, **kwargs)
+
+        # Созраняем данные
+        self.SaveSattings()
+
+    def setIcon(self):  # Назначеам изображения
+        # Устанавливаем иконку мода
+        ico = self.path + '/GUI/Icons/ClearMod.ico'
+        self.setWindowIcon(QtGui.QIcon(ico))
+
+        # Добавляем переменную, хранящую возможные аватары пользователей
+        self.avatars = Avatars()
+        # Добавляем в меню регистрации общедоступный образ
+        PublicAvatar = QtGui.QPixmap(self.path + '/GUI/Avatars/Public/2.png')
+        self.PublicAvatar_image.setPixmap(PublicAvatar)
+        self.PublicAvatar_image.setAlignment(Qt.AlignCenter)
+        # Добавляем в меню регистрации недоступный образ
+        SecretAvatar = QtGui.QPixmap(self.path + '/GUI/Avatars/Secret/0.png')
+        self.SecretAvatar_image.setPixmap(SecretAvatar)
+        self.SecretAvatar_image.setAlignment(Qt.AlignCenter)
+
+    def LeftPublicAvatar_choiser(self):  # Функция выбора общедоступного аватара
+        avatar = self.avatars.get_PublicAvatar(-1)
+
+        PublicAvatar = QtGui.QPixmap(avatar['image'])
+        self.PublicAvatar_image.clear()
+        self.PublicAvatar_image.setPixmap(PublicAvatar)
+        self.PublicAvatar_image.setAlignment(Qt.AlignCenter)
+
+    def RightPublicAvatar_choiser(self):  # Вторая функция выбора общедоступного аватара
+        avatar = self.avatars.get_PublicAvatar()
+
+        PublicAvatar = QtGui.QPixmap(avatar['image'])
+        self.PublicAvatar_image.clear()
+        self.PublicAvatar_image.setPixmap(PublicAvatar)
+        self.PublicAvatar_image.setAlignment(Qt.AlignCenter)
+
+    def LeftSecretAvatar_choiser(self):  # Функция выбора недоступного аватара
+        avatar = self.avatars.get_SecretAvatar(-1)
+
+        SecretAvatar = QtGui.QPixmap(avatar['image'])
+        self.SecretAvatar_image.clear()
+        self.SecretAvatar_image.setPixmap(SecretAvatar)
+        self.SecretAvatar_image.setAlignment(Qt.AlignCenter)
+
+    def RightSecretAvatar_choiser(self):  # Вторая функция выбора недоступного аватара
+        avatar = self.avatars.get_SecretAvatar()
+
+        SecretAvatar = QtGui.QPixmap(avatar['image'])
+        self.SecretAvatar_image.clear()
+        self.SecretAvatar_image.setPixmap(SecretAvatar)
+        self.SecretAvatar_image.setAlignment(Qt.AlignCenter)
+
+
+app = QApplication(sys.argv)
+qdarktheme.setup_theme()
+application = Window()
+application.show()
+
+sys.exit(app.exec())
