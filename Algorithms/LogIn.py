@@ -1,26 +1,30 @@
 from random import choice, randint
-from json import dumps
+from json import dumps, loads
 from sqlite3 import connect
 from requests import post
 from os.path import abspath
 from hashlib import md5
+from datetime import datetime
 
 
-class Registration:
+class Registration:  # Класс регистрации в игре
     def __init__(self, name='', password='', referal='', avartar=0):
+        # Получакм на вход данные пользователя
         self.name = name
         self.password = password
         self.referal = referal
         self.avartar = avartar
 
-    def get_RandomUser(self):
+    def get_RandomUser(self):  # Функция создания случайных данных пользователя
+        # Случайное имя
         self.name = self.RandomStr_gen(symbols='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
                                        lenght=randint(4, 12))
+        # Случайный парроль
         self.password = self.RandomStr_gen(
             symbols='!"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ЁАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдежзийклмнопрстуфхцчшщъыьэюяё',
             lenght=12)
 
-    def RandomStr_gen(self, symbols='', lenght=4):
+    def RandomStr_gen(self, symbols='', lenght=4):  # Функция генерации случайной строки
         res = ''
 
         while lenght:
@@ -32,8 +36,9 @@ class Registration:
     def __str__(self):
         return dumps(self.__dict__, ensure_ascii=False)
 
-    def Registration(self):
+    def Registration(self):  # Функция регистрации в игре
         url = 'https://www.shararam.ru/async/Register'
+
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Shararam/2.0.3 Chrome/80.0.3987.165 Electron/8.2.5 Safari/537.36'}
 
@@ -43,9 +48,15 @@ class Registration:
                 'email': '',
                 'referalName': self.referal}
 
+        # Отправляем запрос
         result = post(url, headers=headers, json=data)
         cookie = result.cookies.get_dict()
-        Coockes(cookie['SessionId']).SaveCoockie()
+
+        # Сохраняем ID сессии из куки
+        SessionId = cookie['SessionId']
+        Coockes(SessionId).SaveCoockie()
+
+        return SessionId
 
 
 class Authorization:
@@ -96,14 +107,20 @@ class Coockes:
         self.path = '\\'.join(path + ['data', 'cookies.sqlite'])
 
     def SaveCoockie(self):
-        print(self.path)
-
+        print(int(datetime.today().timestamp()) * 2)
         # Подключаемся к файлу куки
         db = connect(self.path)
 
         # Изменяем значение SessionId
-        db.execute('''UPDATE moz_cookies SET value = ? WHERE name = ?''',
-                   (self.SessionId, 'SessionId'))
+        date = int(datetime.today().timestamp())
+        creation = date * 10 ** 6
+        db.execute(
+            '''UPDATE moz_cookies SET value = ?, expiry = ?, lastAccessed = ?, creationTime = ? WHERE name = ?''',
+            (self.SessionId,
+             date * 2,
+             creation,
+             creation,
+             'SessionId'))
 
         # Сохраняем файл куки
         db.commit()
@@ -120,10 +137,34 @@ class Coockes:
         db.commit()
 
 
-r = Registration()
-r.get_RandomUser()
-r.Registration()
+class Save_User:
+    def __init__(self):
+        # Определяем путь к файлу с данными пользователя
+        path = abspath(__file__).split('\\')[:-2]
+        self.path = '\\'.join(path + ['data', 'users.json'])
 
-# a = Authorization('DDTE_30', '159753Qwe1')
-# if a.Check_Name() == True:
-#     a.Check_Password()
+        # Читаем данные
+        self.read_data()
+
+    def read_data(self):  # Читаем данные
+        try:
+            with open(self.path, 'r') as file:
+                self.users = loads(file.read())
+        except:
+            self.users = []
+
+    def add_user(self, name='', password=''):  # Добавляем данные
+        # Проверяем, если ли аккунт в списке и изменяем/добавляем его
+        i = 0
+        flag = False
+        while i < len(self.users):
+            user = self.users[i]
+            if user['Имя'] == name:
+                self.users[i] = {'Имя': name, 'Пароль': password}
+                flag = True
+            i += 1
+        if not flag:
+            self.users.append({'Имя': name, 'Пароль': password})
+
+        with open(self.path, 'w') as file:
+            file.write(dumps(self.users, ensure_ascii=False, indent=4))
