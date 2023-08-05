@@ -37,6 +37,7 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
         self.setIcon()
         self.Registration()
         self.Authorization()
+        self.Add_UsersList()
 
     def SystemData(self):  # Отображаем системную информацию
         data = System()  # Получаем информацию о ПК
@@ -209,7 +210,7 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
         self.SecretAvatar_image.setPixmap(SecretAvatar)
         self.SecretAvatar_image.setAlignment(Qt.AlignCenter)
 
-    def RandUser_gen(self):
+    def RandUser_gen(self):  # Функция генерации случайных данных
         user = Registration()
         user.get_RandomUser()
 
@@ -217,7 +218,7 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
         if len(self.Password_input.text()) < 4:
             self.Password_input.setText(user.password)
 
-    def Check_RegData(self):
+    def Check_RegData(self):  # Функция проверки данных для регистрации
         # Копируем логин и пароль
         name = self.Login_input.text()
         password = self.Password_input.text()
@@ -244,7 +245,7 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
                 return True
         return False
 
-    def Reg(self):
+    def Reg(self):  # Регистрация аккаунта
         # Проверяем данные на корректность
         if not self.Check_RegData():
             return None
@@ -267,6 +268,8 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
             if sessionId:
                 self.Message_label.setStyleSheet('color: lightblue')
                 self.Message_label.setText('Смешарик успешно создан!')
+
+                self.Add_UsersList()
             else:
                 self.Message_label.setStyleSheet('color: red')
                 self.Message_label.setText('Произошла неизвестная ошибка!')
@@ -274,6 +277,12 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
             self.Message_label.setStyleSheet('color: red')
             self.Message_label.setText('Произошла неизвестная ошибка!')
 
+    def Add_UsersList(self):
+        self.UsersList_comboBox.clear()
+        with open(self.path + '/data/users.json', 'r') as file:
+            data = loads(file.read())
+        for i in data:
+            self.UsersList_comboBox.addItem(i['Имя'])
 
 
 app = QApplication(sys.argv)
