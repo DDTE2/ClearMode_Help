@@ -56,6 +56,8 @@ class Registration:  # Класс регистрации в игре
         SessionId = cookie['SessionId']
         Coockes(SessionId).SaveCoockie()
 
+        Save_User().add_user(self.name, self.password)
+
         return SessionId
 
 
@@ -117,7 +119,6 @@ def Check_Data(name='', password=''):
                 case -3:
                     return 'NameSymbol_Error'
                 case _:
-                    print(loads(result.content.decode())['errorCode'])
                     return False
     except:
         return 'ConnectionError'
@@ -132,7 +133,6 @@ class Coockes:
         self.path = '\\'.join(path + ['data', 'cookies.sqlite'])
 
     def SaveCoockie(self):
-        print(int(datetime.today().timestamp()) * 2)
         # Подключаемся к файлу куки
         db = connect(self.path)
 
@@ -149,6 +149,7 @@ class Coockes:
 
         # Сохраняем файл куки
         db.commit()
+        db.close()
 
     def ClearCoockie(self):
         # Подключаемся к файлу куки

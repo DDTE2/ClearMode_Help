@@ -121,9 +121,12 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
         self.LeftSecretAvatar_button.clicked.connect(self.LeftSecretAvatar_choiser)
         self.RightSecretAvatar_button.clicked.connect(self.RightSecretAvatar_choiser)
 
-        # Функция создания случайного пользователя
+        # Генерация случайных данных
         self.UserGen_button.clicked.connect(self.RandUser_gen)
+        # Проверка данных
         self.CheckData_button.clicked.connect(self.Check_RegData)
+        # Регистрация аккаунта
+        self.Reg_button.clicked.connect(self.Reg)
 
     def Authorization(self):
         self.ShowPassword2_checkBox.clicked.connect(self.ShowPassword2)
@@ -240,6 +243,37 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
 
                 return True
         return False
+
+    def Reg(self):
+        # Проверяем данные на корректность
+        if not self.Check_RegData():
+            return None
+
+        # Определяем выбранный пользователем аватар
+        if self.Avatar_widget.currentIndex():
+            avatar = self.avatars.SecretAvatar[self.avatars.secret]['id']
+        else:
+            avatar = self.avatars.PublicAvatar[self.avatars.public]['id']
+
+        # Регистрируем пользователя
+        data = Registration(name=self.Login_input.text(),
+                            password=self.Password_input.text(),
+                            avartar=avatar,
+                            referal=self.Referal_input.text())
+
+        try:
+            sessionId = data.Registration()
+            # Увидомляем пользователя
+            if sessionId:
+                self.Message_label.setStyleSheet('color: lightblue')
+                self.Message_label.setText('Смешарик успешно создан!')
+            else:
+                self.Message_label.setStyleSheet('color: red')
+                self.Message_label.setText('Произошла неизвестная ошибка!')
+        except:
+            self.Message_label.setStyleSheet('color: red')
+            self.Message_label.setText('Произошла неизвестная ошибка!')
+
 
 
 app = QApplication(sys.argv)
