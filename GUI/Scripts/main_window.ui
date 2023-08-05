@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ClearMode_Window</class>
- <widget class="QMainWindow" name="ClearMode_Window">
+ <class>ClearMod_Window</class>
+ <widget class="QMainWindow" name="ClearMod_Window">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>ClearMode</string>
+   <string>Clear Mod</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -160,6 +160,29 @@
             <widget class="QCheckBox" name="ShowPassword_checkBox">
              <property name="text">
               <string>Показывать пароль</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="UsersButtons_groupBox">
+          <property name="title">
+           <string/>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <item>
+            <widget class="QPushButton" name="UserGen_button">
+             <property name="text">
+              <string>Случайный</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="ClearData_button">
+             <property name="text">
+              <string>Отчистить</string>
              </property>
             </widget>
            </item>
@@ -311,43 +334,20 @@
          </widget>
         </item>
         <item>
-         <widget class="QGroupBox" name="UsersButtons_groupBox">
-          <property name="title">
-           <string/>
-          </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_5">
-           <item>
-            <widget class="QPushButton" name="UserGen_button">
-             <property name="text">
-              <string>Сгенерировать случайного пользователя</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="ClearData_button">
-             <property name="text">
-              <string>Отчистить</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
          <widget class="QGroupBox" name="RegButtons_groupBox">
           <property name="title">
            <string>Регистрация</string>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_7">
            <item>
-            <widget class="QPushButton" name="CheckData_button_2">
+            <widget class="QPushButton" name="CheckData_button">
              <property name="text">
               <string>Проверить данные</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="Reg_button_2">
+            <widget class="QPushButton" name="Reg_button">
              <property name="text">
               <string>Зарегистрироваться</string>
              </property>

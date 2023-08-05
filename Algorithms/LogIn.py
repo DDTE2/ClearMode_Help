@@ -64,20 +64,6 @@ class Authorization:
         self.name = name
         self.password = password
 
-    def Check_Name(self):
-        url = 'https://www.shararam.ru/api/user/check_login'
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Shararam/2.0.3 Chrome/80.0.3987.165 Electron/8.2.5 Safari/537.36'}
-
-        data = {'login': self.name}
-
-        try:
-            result = post(url, headers=headers, json=data)
-
-            return result.content == b'{"code":0}'
-        except:
-            return 'ConnectionError'
-
     def Check_Password(self):
         url = 'https://www.shararam.ru/api/user/login'
         headers = {
@@ -96,6 +82,45 @@ class Authorization:
                 Coockes(cookie['SessionId']).SaveCoockie()
         except:
             return 'ConnectionError'
+
+
+def Check_Data(name='', password=''):
+    # Проверяем длину данных
+    if len(name) < 4:
+        return 'NameLen_Error'
+    elif len(password) < 4:
+        return 'PasswordLen_Error'
+
+    # Проверяем ник на существование
+    url = 'https://www.shararam.ru/api/user/check_login'
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Shararam/2.0.3 Chrome/80.0.3987.165 Electron/8.2.5 Safari/537.36'}
+
+    data = {'login': name}
+
+    try:
+        result = post(url, headers=headers, json=data)
+        if result.content == b'{"code":0}':
+            return True
+        else:
+            # Проверяем ник на корректность
+            url = 'https://www.shararam.ru/async/RegisterValidate'
+            data = {'code': 0,
+                    'data': name}
+
+            result = post(url, headers=headers, json=data)
+            match loads(result.content.decode())['errorCode']:
+                case 0:
+                    return False
+                case -6:
+                    return 'NameText_Error'
+                case -3:
+                    return 'NameSymbol_Error'
+                case _:
+                    print(loads(result.content.decode())['errorCode'])
+                    return False
+    except:
+        return 'ConnectionError'
 
 
 class Coockes:

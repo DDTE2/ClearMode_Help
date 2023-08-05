@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QApplication
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtCore import Qt
 import qdarktheme
-from GUI.Scripts.main_window import Ui_ClearMode_Window
+from GUI.Scripts.main_window import Ui_ClearMod_Window
 import sys
 # Данные о ПК
 from Algorithms.SystemData import System
@@ -14,13 +14,14 @@ from json import dumps, loads
 from os import walk
 # Мои модули
 from Algorithms.AvatarList import Avatars
+from Algorithms.LogIn import *
 
 
-class Window(QtWidgets.QMainWindow, Ui_ClearMode_Window):
+class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
     def __init__(self):
         # Наследуем классы интерфейса
         QtWidgets.QMainWindow.__init__(self)
-        super(Ui_ClearMode_Window).__init__()
+        super(Ui_ClearMod_Window).__init__()
 
         # Получаем директорию проекта
         path = abspath(__file__).split('\\')[:-1]
@@ -120,6 +121,10 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMode_Window):
         self.LeftSecretAvatar_button.clicked.connect(self.LeftSecretAvatar_choiser)
         self.RightSecretAvatar_button.clicked.connect(self.RightSecretAvatar_choiser)
 
+        # Функция создания случайного пользователя
+        self.UserGen_button.clicked.connect(self.RandUser_gen)
+        self.CheckData_button.clicked.connect(self.Check_RegData)
+
     def Authorization(self):
         self.ShowPassword2_checkBox.clicked.connect(self.ShowPassword2)
 
@@ -200,6 +205,41 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMode_Window):
         self.SecretAvatar_image.clear()
         self.SecretAvatar_image.setPixmap(SecretAvatar)
         self.SecretAvatar_image.setAlignment(Qt.AlignCenter)
+
+    def RandUser_gen(self):
+        user = Registration()
+        user.get_RandomUser()
+
+        self.Login_input.setText(user.name)
+        if len(self.Password_input.text()) < 4:
+            self.Password_input.setText(user.password)
+
+    def Check_RegData(self):
+        # Копируем логин и пароль
+        name = self.Login_input.text()
+        password = self.Password_input.text()
+
+        # Проверяем логин и пароль
+        self.Message_label.setStyleSheet('color: red')
+        match Check_Data(name, password):
+            case 'NameLen_Error':
+                self.Message_label.setText('Имя смешарика должно быть длинее 3-х символов!')
+            case True:
+                self.Message_label.setText('Это имя уже занято!')
+            case 'PasswordLen_Error':
+                self.Message_label.setText('Пароль смешарика должно быть длинее 3-х символов!')
+            case 'ConnectionError':
+                self.Message_label.setText('Возникли проблемы соединения с сервером.')
+            case 'NameText_Error':
+                self.Message_label.setText('Недопустимое имя смешарика!')
+            case 'NameSymbol_Error':
+                self.Message_label.setText('Имя смешарика может содержать только буквы и цифры!')
+            case _:
+                self.Message_label.setStyleSheet('color: lightblue')
+                self.Message_label.setText('Вы можете создать смешарика.')
+
+                return True
+        return False
 
 
 app = QApplication(sys.argv)
