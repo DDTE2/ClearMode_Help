@@ -192,5 +192,7 @@ class Save_User:
         if not flag:
             self.users.append({'Имя': name, 'Пароль': password})
 
+        self.users = sorted(self.users, key=lambda d: d['Имя'])
+
         with open(self.path, 'w') as file:
             file.write(dumps(self.users, ensure_ascii=False, indent=4))

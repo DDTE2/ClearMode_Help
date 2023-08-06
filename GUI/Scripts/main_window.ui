@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>920</width>
-    <height>615</height>
+    <height>705</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>920</width>
-    <height>615</height>
+    <height>705</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -372,13 +372,13 @@
        <attribute name="title">
         <string>Авторизация</string>
        </attribute>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
           <x>9</x>
           <y>0</y>
           <width>441</width>
-          <height>221</height>
+          <height>225</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_21">
@@ -817,7 +817,24 @@
        </attribute>
        <layout class="QGridLayout" name="gridLayout_10">
         <item row="0" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_8">
+          <item>
+           <widget class="QPushButton" name="ReloadItems_button">
+            <property name="text">
+             <string>Обновить страницу</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="0">
          <widget class="QWebEngineView" name="InstantList">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="url">
            <url>
             <string>http://instant.jjck.ru/all_items.html</string>
@@ -844,18 +861,34 @@
  </resources>
  <connections>
   <connection>
+   <sender>ReloadItems_button</sender>
+   <signal>clicked()</signal>
+   <receiver>InstantList</receiver>
+   <slot>reload()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>120</x>
+     <y>24</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>121</x>
+     <y>31</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>ClearData_button</sender>
    <signal>clicked()</signal>
    <receiver>Login_input</receiver>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>609</x>
-     <y>486</y>
+     <x>514</x>
+     <y>178</y>
     </hint>
     <hint type="destinationlabel">
-     <x>255</x>
-     <y>54</y>
+     <x>509</x>
+     <y>52</y>
     </hint>
    </hints>
   </connection>
@@ -866,12 +899,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>607</x>
-     <y>488</y>
+     <x>612</x>
+     <y>176</y>
     </hint>
     <hint type="destinationlabel">
-     <x>331</x>
-     <y>85</y>
+     <x>612</x>
+     <y>77</y>
     </hint>
    </hints>
   </connection>
@@ -882,12 +915,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>619</x>
-     <y>500</y>
+     <x>730</x>
+     <y>180</y>
     </hint>
     <hint type="destinationlabel">
-     <x>470</x>
-     <y>106</y>
+     <x>739</x>
+     <y>102</y>
     </hint>
    </hints>
   </connection>

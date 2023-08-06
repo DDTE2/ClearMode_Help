@@ -32,12 +32,12 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
 
         # Настриваем интерфейс
         self.setupUi(self)
-        self.Load_run_settings()
-        self.SystemData()
-        self.setIcon()
-        self.Registration()
-        self.Authorization()
-        self.Add_UsersList()
+        self.Load_run_settings()  # Настраиваем окно запуска лаунчера
+        self.SystemData()  # Выводим на экран системную информацию
+        self.setIcon()  # Устанавливаем изображения
+        self.Registration()  # Настраиваем окно регистрации
+        self.Authorization()  # Настраиваем окно авторизации
+        self.Add_UsersList()  # Добавляем список пользователей в окно авторизации
 
     def SystemData(self):  # Отображаем системную информацию
         data = System()  # Получаем информацию о ПК

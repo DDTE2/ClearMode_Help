@@ -12,12 +12,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from pyqt_vertical_tab_widget import VerticalTabWidget
 from PyQt5 import QtWebEngineWidgets
 
-
 class Ui_ClearMod_Window(object):
     def setupUi(self, ClearMod_Window):
         ClearMod_Window.setObjectName("ClearMod_Window")
-        ClearMod_Window.resize(920, 615)
-        ClearMod_Window.setMinimumSize(QtCore.QSize(920, 615))
+        ClearMod_Window.resize(920, 705)
+        ClearMod_Window.setMinimumSize(QtCore.QSize(920, 705))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("../Icons/ClearMod.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         ClearMod_Window.setWindowIcon(icon)
@@ -201,13 +200,13 @@ class Ui_ClearMod_Window(object):
         self.Interface_Widget.addTab(self.tab_3, "")
         self.tab_6 = QtWidgets.QWidget()
         self.tab_6.setObjectName("tab_6")
-        self.widget1 = QtWidgets.QWidget(self.tab_6)
-        self.widget1.setGeometry(QtCore.QRect(9, 0, 441, 221))
-        self.widget1.setObjectName("widget1")
-        self.verticalLayout_21 = QtWidgets.QVBoxLayout(self.widget1)
+        self.layoutWidget1 = QtWidgets.QWidget(self.tab_6)
+        self.layoutWidget1.setGeometry(QtCore.QRect(9, 0, 441, 225))
+        self.layoutWidget1.setObjectName("layoutWidget1")
+        self.verticalLayout_21 = QtWidgets.QVBoxLayout(self.layoutWidget1)
         self.verticalLayout_21.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_21.setObjectName("verticalLayout_21")
-        self.Login_groupBox_1 = QtWidgets.QGroupBox(self.widget1)
+        self.Login_groupBox_1 = QtWidgets.QGroupBox(self.layoutWidget1)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -244,7 +243,7 @@ class Ui_ClearMod_Window(object):
         self.ShowPassword2_checkBox.setObjectName("ShowPassword2_checkBox")
         self.verticalLayout_11.addWidget(self.ShowPassword2_checkBox)
         self.verticalLayout_21.addWidget(self.Login_groupBox_1)
-        self.Login_groupBox_2 = QtWidgets.QGroupBox(self.widget1)
+        self.Login_groupBox_2 = QtWidgets.QGroupBox(self.layoutWidget1)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -257,7 +256,7 @@ class Ui_ClearMod_Window(object):
         self.UsersList_comboBox.setObjectName("UsersList_comboBox")
         self.verticalLayout_18.addWidget(self.UsersList_comboBox)
         self.verticalLayout_21.addWidget(self.Login_groupBox_2)
-        self.pushButton = QtWidgets.QPushButton(self.widget1)
+        self.pushButton = QtWidgets.QPushButton(self.layoutWidget1)
         self.pushButton.setObjectName("pushButton")
         self.verticalLayout_21.addWidget(self.pushButton)
         self.Interface_Widget.addTab(self.tab_6, "")
@@ -492,10 +491,21 @@ class Ui_ClearMod_Window(object):
         self.tab_4.setObjectName("tab_4")
         self.gridLayout_10 = QtWidgets.QGridLayout(self.tab_4)
         self.gridLayout_10.setObjectName("gridLayout_10")
+        self.horizontalLayout_8 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_8.setObjectName("horizontalLayout_8")
+        self.ReloadItems_button = QtWidgets.QPushButton(self.tab_4)
+        self.ReloadItems_button.setObjectName("ReloadItems_button")
+        self.horizontalLayout_8.addWidget(self.ReloadItems_button)
+        self.gridLayout_10.addLayout(self.horizontalLayout_8, 0, 0, 1, 1)
         self.InstantList = QtWebEngineWidgets.QWebEngineView(self.tab_4)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.InstantList.sizePolicy().hasHeightForWidth())
+        self.InstantList.setSizePolicy(sizePolicy)
         self.InstantList.setUrl(QtCore.QUrl("http://instant.jjck.ru/all_items.html"))
         self.InstantList.setObjectName("InstantList")
-        self.gridLayout_10.addWidget(self.InstantList, 0, 0, 1, 1)
+        self.gridLayout_10.addWidget(self.InstantList, 1, 0, 1, 1)
         self.Interface_Widget.addTab(self.tab_4, "")
         self.gridLayout.addWidget(self.Interface_Widget, 0, 1, 1, 1)
         ClearMod_Window.setCentralWidget(self.centralwidget)
@@ -503,9 +513,10 @@ class Ui_ClearMod_Window(object):
         self.retranslateUi(ClearMod_Window)
         self.Interface_Widget.setCurrentIndex(0)
         self.Avatar_widget.setCurrentIndex(0)
-        self.ClearData_button.clicked.connect(self.Login_input.clear)  # type: ignore
-        self.ClearData_button.clicked.connect(self.Password_input.clear)  # type: ignore
-        self.ClearData_button.clicked.connect(self.Referal_input.clear)  # type: ignore
+        self.ReloadItems_button.clicked.connect(self.InstantList.reload) # type: ignore
+        self.ClearData_button.clicked.connect(self.Login_input.clear) # type: ignore
+        self.ClearData_button.clicked.connect(self.Password_input.clear) # type: ignore
+        self.ClearData_button.clicked.connect(self.Referal_input.clear) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(ClearMod_Window)
 
     def retranslateUi(self, ClearMod_Window):
@@ -516,8 +527,7 @@ class Ui_ClearMod_Window(object):
         self.DarkTheam_radioButton.setText(_translate("ClearMod_Window", "Тёмная тема"))
         self.reboot_checkBox.setText(_translate("ClearMod_Window", "Снять перманентный бан и перезагрузить компьютер"))
         self.Start_button.setText(_translate("ClearMod_Window", "Старт"))
-        self.Interface_Widget.setTabText(self.Interface_Widget.indexOf(self.tab),
-                                         _translate("ClearMod_Window", "Clear Mode"))
+        self.Interface_Widget.setTabText(self.Interface_Widget.indexOf(self.tab), _translate("ClearMod_Window", "Clear Mode"))
         self.Data_box.setTitle(_translate("ClearMod_Window", "Данные"))
         self.Login_label.setText(_translate("ClearMod_Window", "Имя"))
         self.Password_label.setText(_translate("ClearMod_Window", "Пароль"))
@@ -527,30 +537,24 @@ class Ui_ClearMod_Window(object):
         self.ClearData_button.setText(_translate("ClearMod_Window", "Отчистить"))
         self.Avatar_groupBox.setTitle(_translate("ClearMod_Window", "Аватар"))
         self.LeftPublicAvatar_button.setText(_translate("ClearMod_Window", "..."))
-        self.PublicAvatar_image.setText(_translate("ClearMod_Window",
-                                                   "<html><head/><body><p align=\"center\"><img src=\":/Public/Public/8.png\"/></p></body></html>"))
+        self.PublicAvatar_image.setText(_translate("ClearMod_Window", "<html><head/><body><p align=\"center\"><img src=\":/Public/Public/8.png\"/></p></body></html>"))
         self.RightPublicAvatar_button.setText(_translate("ClearMod_Window", "..."))
-        self.Avatar_widget.setTabText(self.Avatar_widget.indexOf(self.widget),
-                                      _translate("ClearMod_Window", "Общедоступные образы"))
+        self.Avatar_widget.setTabText(self.Avatar_widget.indexOf(self.widget), _translate("ClearMod_Window", "Общедоступные образы"))
         self.LeftSecretAvatar_button.setText(_translate("ClearMod_Window", "..."))
-        self.SecretAvatar_image.setText(_translate("ClearMod_Window",
-                                                   "<html><head/><body><p align=\"center\"><img src=\":/Secret/Secret/0.png\"/></p></body></html>"))
+        self.SecretAvatar_image.setText(_translate("ClearMod_Window", "<html><head/><body><p align=\"center\"><img src=\":/Secret/Secret/0.png\"/></p></body></html>"))
         self.RightSecretAvatar_button.setText(_translate("ClearMod_Window", "..."))
-        self.Avatar_widget.setTabText(self.Avatar_widget.indexOf(self.tab_5),
-                                      _translate("ClearMod_Window", "Прочие образы"))
+        self.Avatar_widget.setTabText(self.Avatar_widget.indexOf(self.tab_5), _translate("ClearMod_Window", "Прочие образы"))
         self.RegButtons_groupBox.setTitle(_translate("ClearMod_Window", "Регистрация"))
         self.CheckData_button.setText(_translate("ClearMod_Window", "Проверить данные"))
         self.Reg_button.setText(_translate("ClearMod_Window", "Зарегистрироваться"))
-        self.Interface_Widget.setTabText(self.Interface_Widget.indexOf(self.tab_3),
-                                         _translate("ClearMod_Window", "Регистрация"))
+        self.Interface_Widget.setTabText(self.Interface_Widget.indexOf(self.tab_3), _translate("ClearMod_Window", "Регистрация"))
         self.Login_groupBox_1.setTitle(_translate("ClearMod_Window", "Войти по логину и паролю"))
         self.Login_label_2.setText(_translate("ClearMod_Window", "Имя"))
         self.Password_label_2.setText(_translate("ClearMod_Window", "Пароль"))
         self.ShowPassword2_checkBox.setText(_translate("ClearMod_Window", "Показывать пароль"))
         self.Login_groupBox_2.setTitle(_translate("ClearMod_Window", "Войти в уже добавленый аккаунт"))
         self.pushButton.setText(_translate("ClearMod_Window", "Войти"))
-        self.Interface_Widget.setTabText(self.Interface_Widget.indexOf(self.tab_6),
-                                         _translate("ClearMod_Window", "Авторизация"))
+        self.Interface_Widget.setTabText(self.Interface_Widget.indexOf(self.tab_6), _translate("ClearMod_Window", "Авторизация"))
         self.System_groupBox.setTitle(_translate("ClearMod_Window", "Система"))
         self.OS_label.setText(_translate("ClearMod_Window", "Операционная система:"))
         self.MAC_label.setText(_translate("ClearMod_Window", "MAC-адрес:"))
@@ -567,15 +571,13 @@ class Ui_ClearMod_Window(object):
         self.Wireshark_label.setText(_translate("ClearMod_Window", "Wireshark:"))
         self.Charles_label.setText(_translate("ClearMod_Window", "Charles Proxy:"))
         self.Fiddler_label.setText(_translate("ClearMod_Window", "Fiddler:"))
-        self.Interface_Widget.setTabText(self.Interface_Widget.indexOf(self.tab_2),
-                                         _translate("ClearMod_Window", "Система"))
-        self.Interface_Widget.setTabText(self.Interface_Widget.indexOf(self.tab_4),
-                                         _translate("ClearMod_Window", "Список вещей"))
+        self.Interface_Widget.setTabText(self.Interface_Widget.indexOf(self.tab_2), _translate("ClearMod_Window", "Система"))
+        self.ReloadItems_button.setText(_translate("ClearMod_Window", "Обновить страницу"))
+        self.Interface_Widget.setTabText(self.Interface_Widget.indexOf(self.tab_4), _translate("ClearMod_Window", "Список вещей"))
 
 
 if __name__ == "__main__":
     import sys
-
     app = QtWidgets.QApplication(sys.argv)
     ClearMod_Window = QtWidgets.QMainWindow()
     ui = Ui_ClearMod_Window()
