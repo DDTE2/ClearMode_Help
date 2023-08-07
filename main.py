@@ -101,9 +101,9 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
         else:
             self.reboot_checkBox.setChecked(False)
 
-        self.Start_button.clicked.connect(self.ClearMode_run)
+        self.Start_button.clicked.connect(self.ClearMode_RunMenu)
 
-    def ClearMode_run(self):
+    def ClearMode_RunMenu(self):  # Меню запуска Clear Mod
         # Сораняем настройки
         if self.LighTheam_radioButton.isChecked():
             self.settings['run'] = {'theam': 'light'}
@@ -113,7 +113,7 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
         self.settings['run']['reboot'] = self.reboot_checkBox.isChecked()
         self.SaveSattings()
 
-    def Registration(self):
+    def Registration(self):  # Меню регистрации
         # Назначаем функцию на кнопку показа паороля
         self.ShowPassword_checkBox.clicked.connect(self.ShowPassword)
         # Настраиваем кнопки выбора аватара
@@ -129,16 +129,18 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
         # Регистрация аккаунта
         self.Reg_button.clicked.connect(self.Reg)
 
-    def Authorization(self):
+    def Authorization(self):  # Меню авторизации
         self.ShowPassword2_checkBox.clicked.connect(self.ShowPassword2)
+        self.UsersList_comboBox.activated.connect(self.Account_Choise)
+        self.Login_Button.clicked.connect(self.LogIn)
 
-    def ShowPassword(self):
+    def ShowPassword(self):  # Кнопка показа пароля в меню регистрации
         if self.ShowPassword_checkBox.isChecked():
             self.Password_input.setEchoMode(0)
         else:
             self.Password_input.setEchoMode(2)
 
-    def ShowPassword2(self):
+    def ShowPassword2(self):  # Кнопка показа пароля в меню авторизации
         if self.ShowPassword2_checkBox.isChecked():
             self.Password_input_2.setEchoMode(0)
         else:
@@ -233,7 +235,7 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
             case 'PasswordLen_Error':
                 self.Message_label.setText('Пароль смешарика должно быть длинее 3-х символов!')
             case 'ConnectionError':
-                self.Message_label.setText('Возникли проблемы соединения с сервером.')
+                self.Message_label.setText('Возникли проблемы при подключении к серверу.')
             case 'NameText_Error':
                 self.Message_label.setText('Недопустимое имя смешарика!')
             case 'NameSymbol_Error':
@@ -264,7 +266,7 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
 
         try:
             sessionId = data.Registration()
-            # Увидомляем пользователя
+            # Уведомляем пользователя
             if sessionId:
                 self.Message_label.setStyleSheet('color: lightblue')
                 self.Message_label.setText('Смешарик успешно создан!')
@@ -277,12 +279,68 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
             self.Message_label.setStyleSheet('color: red')
             self.Message_label.setText('Произошла неизвестная ошибка!')
 
-    def Add_UsersList(self):
+    def Add_UsersList(self):  # Создаём список аккаунтов
         self.UsersList_comboBox.clear()
         with open(self.path + '/data/users.json', 'r') as file:
             data = loads(file.read())
         for i in data:
             self.UsersList_comboBox.addItem(i['Имя'])
+
+        self.Account_Choise()
+
+    def Account_Choise(self):  # Функция выбора аккаунта при авторизации
+        userId = self.UsersList_comboBox.currentIndex()
+
+        with open(self.path + '/data/users.json', 'r') as file:
+            users = loads(file.read())
+
+            data = users[userId]
+            self.Login_input_2.setText(data['Имя'])
+            self.Password_input_2.setText(data['Пароль'])
+
+    def LogIn(self):  # Авторизация в игре
+        # Меняем цвет увидомления на красный
+        self.LoginError_label.setStyleSheet('color: red')
+
+        # Считываем введённые пользователем логин и пароль
+        name = self.Login_input_2.text()
+        password = self.Password_input_2.text()
+
+        # Осуществляем авторизацию
+        LoginResult = Authorization(name, password)
+
+        # Выводим ошибку на экран
+        match LoginResult:
+            case 'NameLen_Error':
+                self.LoginError_label.setText('Имя должно быть длинее 3-х символов!')
+                return False
+            case 'PasswordLen_Error':
+                self.LoginError_label.setText('Пароль должен быть длинее 3-х символов!')
+                return False
+            case 'ConnectionError':
+                self.LoginError_label.setText('Возникли проблемы при подключении к серверу.')
+                return False
+            case 'NameText_Error':
+                self.LoginError_label.setText('Недопустимое имя смешарика!')
+                return False
+            case 'NameSymbol_Error':
+                self.LoginError_label.setText('Имя может содержать только буквы и цифры!')
+                return False
+            case 'WromgPassword_Error':
+                self.LoginError_label.setText('Неверный пароль!')
+                return False
+            case False:
+                self.LoginError_label.setText('При подключении к серверу произошла ошибка!')
+                return False
+
+        # Добавляем аккаунт в список пользователей
+        Save_User().add_user(name=self.Login_input_2.text(),
+                             password=self.Password_input_2.text())
+        self.Add_UsersList()
+
+        # Уведомляем пользователя об успешной регистрации
+        self.LoginError_label.setStyleSheet('color: lightblue')
+        self.LoginError_label.setText('Вход в игру прошёл успешно.')
 
 
 app = QApplication(sys.argv)

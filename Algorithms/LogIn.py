@@ -61,29 +61,37 @@ class Registration:  # Класс регистрации в игре
         return SessionId
 
 
-class Authorization:
-    def __init__(self, name='', password=''):
-        self.name = name
-        self.password = password
+def Authorization(name='', password=''):  # Функция авторизации на сайте
+    cd = Check_Data(name, password)  # роверяем даннын
+    if cd != True:
+        return cd
 
-    def Check_Password(self):
-        url = 'https://www.shararam.ru/api/user/login'
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Shararam/2.0.3 Chrome/80.0.3987.165 Electron/8.2.5 Safari/537.36'}
+    url = 'https://www.shararam.ru/api/user/login'
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Shararam/2.0.3 Chrome/80.0.3987.165 Electron/8.2.5 Safari/537.36'}
 
-        data = {'login': self.name,
-                'password': md5(self.password.encode()).hexdigest()}
+    data = {'login': name,
+            'password': md5(password.encode()).hexdigest()}
 
-        try:
-            result = post(url, headers=headers, json=data)
+    try:
+        result = post(url, headers=headers, json=data)
 
-            if result.content != b'{"code":0}':
-                return False
-            else:
+        match result.content:
+            case b'{"code":0}':
                 cookie = result.cookies.get_dict()
                 Coockes(cookie['SessionId']).SaveCoockie()
-        except:
-            return 'ConnectionError'
+
+                return True
+
+            case b'{"error":"\xd0\x9d\xd0\xb5\xd0\xb2\xd0\xb5\xd1\x80\xd0\xbd\xd1\x8b\xd0\xb9 \xd0\xbf\xd0\xb0\xd1\x80\xd0\xbe\xd0\xbb\xd1\x8c","code":-1}':
+                return 'WromgPassword_Error'
+
+            case _:
+                print(result.content.decode())
+                return False
+
+    except:
+        return 'ConnectionError'
 
 
 def Check_Data(name='', password=''):
@@ -186,13 +194,15 @@ class Save_User:
         while i < len(self.users):
             user = self.users[i]
             if user['Имя'] == name:
-                self.users[i] = {'Имя': name, 'Пароль': password}
+                self.users.pop(i)
+                self.users.insert(0, {'Имя': name, 'Пароль': password})
+
                 flag = True
             i += 1
         if not flag:
-            self.users.append({'Имя': name, 'Пароль': password})
+            self.users.insert(0, {'Имя': name, 'Пароль': password})
 
-        self.users = sorted(self.users, key=lambda d: d['Имя'])
+        # self.users = sorted(self.users, key=lambda d: d['Имя'])  # Сортировка пользователей по имени
 
         with open(self.path, 'w') as file:
             file.write(dumps(self.users, ensure_ascii=False, indent=4))
