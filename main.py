@@ -16,6 +16,8 @@ from os import walk
 from Algorithms.AvatarList import Avatars
 from Algorithms.LogIn import *
 from Algorithms.Clear_Files import *
+from Algorithms.Shortcut import *
+from Algorithms.ClearMod_run import ClearMod
 
 
 class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
@@ -39,6 +41,7 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
         self.Registration()  # Настраиваем окно регистрации
         self.Authorization()  # Настраиваем окно авторизации
         self.Clear_Data()  # Настраиваем кнопки удаления файлов
+        self.Shortcut()
 
         # Добавляем список пользователей в окно авторизации
         try:
@@ -48,6 +51,36 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
                 file.write('[]')
 
             self.Add_UsersList()
+
+    def Shortcut(self):
+        self.ShortcutCreate_button.clicked.connect(self.add_Shortcut)
+        self.ShortcutDelete_button.clicked.connect(self.Del_Shortcut)
+
+        shortcut = Shortcut()
+
+        if shortcut.Check_System():
+            if shortcut.Check_Shortcut():
+                self.ShortcutCreate_button.setEnabled(False)
+                self.ShortcutDelete_button.setEnabled(True)
+            else:
+                self.ShortcutCreate_button.setEnabled(True)
+                self.ShortcutDelete_button.setEnabled(False)
+
+        else:
+            self.ShortcutCreate_button.setEnabled(False)
+            self.ShortcutDelete_button.setEnabled(False)
+
+    def Del_Shortcut(self):
+        shortcut = Shortcut()
+
+        shortcut.Delete()
+        self.Shortcut()
+
+    def add_Shortcut(self):
+        shortcut = Shortcut()
+
+        shortcut.Create()
+        self.Shortcut()
 
     def Clear_Data(self):
         self.ClearAllData_button.clicked.connect(ClearData)
@@ -120,12 +153,15 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
     def ClearMode_RunMenu(self):  # Меню запуска Clear Mod
         # Сораняем настройки
         if self.LighTheam_radioButton.isChecked():
-            self.settings['run'] = {'theam': 'light'}
+            theam = 'light'
         else:
-            self.settings['run'] = {'theam': 'dark'}
+            theam = 'dark'
 
-        self.settings['run']['reboot'] = self.reboot_checkBox.isChecked()
-        self.SaveSattings()
+        self.settings['run'] = {'theam': theam}
+        reboot = self.settings['run']['reboot'] = self.reboot_checkBox.isChecked()
+
+        self.SaveSettings()
+        self.Start_button.clicked.connect(lambda: ClearMod(theam, reboot))
 
     def Registration(self):  # Меню регистрации
         # Назначаем функцию на кнопку показа паороля
@@ -168,7 +204,7 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
         except:
             self.settings = {'run': {'theam': 'light', 'reboot': False}}
 
-    def SaveSattings(self):  # Сохраняем настройки пользователя
+    def SaveSettings(self):  # Сохраняем настройки пользователя
         with open(self.path + '/data/settings.json', 'w') as file:
             file.write(dumps(self.settings, indent=4))
 
@@ -176,7 +212,7 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
         super(QtWidgets.QMainWindow, self).closeEvent(*args, **kwargs)
 
         # Созраняем данные
-        self.SaveSattings()
+        self.SaveSettings()
 
     def setIcon(self):  # Назначеам изображения
         # Устанавливаем иконку мода

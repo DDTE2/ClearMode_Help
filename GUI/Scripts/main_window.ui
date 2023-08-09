@@ -25,13 +25,13 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="1">
+    <item row="0" column="0">
      <widget class="QTabWidget" name="Menu_widget">
       <property name="tabPosition">
        <enum>QTabWidget::West</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>5</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -41,9 +41,9 @@
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>0</y>
-          <width>571</width>
-          <height>401</height>
+          <y>10</y>
+          <width>611</width>
+          <height>358</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -118,12 +118,30 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>200</height>
+            </size>
+           </property>
            <property name="title">
             <string>Допполнительно</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_15">
-            <item row="2" column="0">
+            <item row="0" column="0">
              <widget class="QTabWidget" name="Additionally_buttons">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>200</height>
+               </size>
+              </property>
               <property name="currentIndex">
                <number>0</number>
               </property>
@@ -142,7 +160,7 @@
                   </property>
                   <property name="font">
                    <font>
-                    <pointsize>15</pointsize>
+                    <pointsize>8</pointsize>
                    </font>
                   </property>
                   <property name="text">
@@ -163,7 +181,7 @@
                   </property>
                   <property name="font">
                    <font>
-                    <pointsize>15</pointsize>
+                    <pointsize>8</pointsize>
                    </font>
                   </property>
                   <property name="text">
@@ -211,24 +229,6 @@
                   </property>
                   <property name="text">
                    <string>Отчистить AppData</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="0">
-                 <widget class="QPushButton" name="Uninstall_button">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <pointsize>15</pointsize>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>Удалить Clear Mod</string>
                   </property>
                  </widget>
                 </item>
@@ -991,18 +991,14 @@
         <string>Список вещей</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_10">
-        <item row="0" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout_8">
-          <item>
-           <widget class="QPushButton" name="ReloadItems_button">
-            <property name="text">
-             <string>Обновить страницу</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
         <item row="1" column="0">
+         <widget class="QPushButton" name="ReloadItems_button">
+          <property name="text">
+           <string>Обновить страницу</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
          <widget class="QWebEngineView" name="InstantList">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -1027,7 +1023,7 @@
         <item row="1" column="0">
          <widget class="QTabWidget" name="Contacts_widget">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="tab_7">
            <attribute name="title">
@@ -1043,6 +1039,13 @@
               </property>
              </widget>
             </item>
+            <item row="1" column="0">
+             <widget class="QPushButton" name="ReloadContacts_button">
+              <property name="text">
+               <string>Обновить страницу</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
           <widget class="QWidget" name="tab_8">
@@ -1054,20 +1057,13 @@
              <widget class="QWebEngineView" name="Donate_url">
               <property name="url">
                <url>
-                <string>https://qiwi.com/payment/form/99999?extra[%27accountType%27]=nickname&amp;extra[%27account%27]=FOLLS957</string>
+                <string>https://qiwi.com/n/FOLLS957</string>
                </url>
               </property>
              </widget>
             </item>
            </layout>
           </widget>
-         </widget>
-        </item>
-        <item row="0" column="0">
-         <widget class="QPushButton" name="ReloadContacts_button">
-          <property name="text">
-           <string>Обновить страницу</string>
-          </property>
          </widget>
         </item>
        </layout>
@@ -1095,8 +1091,8 @@
    <slot>reload()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>120</x>
-     <y>24</y>
+     <x>151</x>
+     <y>675</y>
     </hint>
     <hint type="destinationlabel">
      <x>121</x>
@@ -1111,12 +1107,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>139</x>
-     <y>53</y>
+     <x>602</x>
+     <y>190</y>
     </hint>
     <hint type="destinationlabel">
-     <x>139</x>
-     <y>49</y>
+     <x>363</x>
+     <y>64</y>
     </hint>
    </hints>
   </connection>
@@ -1127,12 +1123,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>139</x>
-     <y>53</y>
+     <x>602</x>
+     <y>190</y>
     </hint>
     <hint type="destinationlabel">
-     <x>139</x>
-     <y>49</y>
+     <x>363</x>
+     <y>90</y>
     </hint>
    </hints>
   </connection>
@@ -1143,12 +1139,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>139</x>
-     <y>53</y>
+     <x>602</x>
+     <y>190</y>
     </hint>
     <hint type="destinationlabel">
-     <x>139</x>
-     <y>49</y>
+     <x>363</x>
+     <y>116</y>
     </hint>
    </hints>
   </connection>
@@ -1159,8 +1155,8 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>141</x>
-     <y>42</y>
+     <x>174</x>
+     <y>208</y>
     </hint>
     <hint type="destinationlabel">
      <x>141</x>
@@ -1175,12 +1171,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>141</x>
-     <y>42</y>
+     <x>174</x>
+     <y>208</y>
     </hint>
     <hint type="destinationlabel">
-     <x>141</x>
-     <y>42</y>
+     <x>230</x>
+     <y>84</y>
     </hint>
    </hints>
   </connection>
@@ -1191,8 +1187,8 @@
    <slot>reload()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>501</x>
-     <y>33</y>
+     <x>543</x>
+     <y>669</y>
     </hint>
     <hint type="destinationlabel">
      <x>501</x>
@@ -1207,8 +1203,8 @@
    <slot>reload()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>394</x>
-     <y>35</y>
+     <x>436</x>
+     <y>669</y>
     </hint>
     <hint type="destinationlabel">
      <x>412</x>

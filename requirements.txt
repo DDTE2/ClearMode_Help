@@ -5,11 +5,11 @@ pyqt5-tools
 pyqt-vertical-tab-widget
 PyQtWebEngine
 
-# Шифрование
-pycryptodome
-
 # Работа с системой
 psutil
 
 # Запросы
 requests
+
+# Ярлыки
+pywin32
