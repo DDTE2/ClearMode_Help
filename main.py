@@ -37,7 +37,15 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
         self.setIcon()  # Устанавливаем изображения
         self.Registration()  # Настраиваем окно регистрации
         self.Authorization()  # Настраиваем окно авторизации
-        self.Add_UsersList()  # Добавляем список пользователей в окно авторизации
+
+        # Добавляем список пользователей в окно авторизации
+        try:
+            self.Add_UsersList()
+        except:
+            with open(self.path + '/data/users.json', 'w') as file:
+                file.write('[]')
+
+            self.Add_UsersList()
 
     def SystemData(self):  # Отображаем системную информацию
         data = System()  # Получаем информацию о ПК
@@ -286,7 +294,10 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
         for i in data:
             self.UsersList_comboBox.addItem(i['Имя'])
 
-        self.Account_Choise()
+        try:
+            self.Account_Choise()
+        except:
+            pass
 
     def Account_Choise(self):  # Функция выбора аккаунта при авторизации
         userId = self.UsersList_comboBox.currentIndex()
@@ -336,6 +347,7 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
         # Добавляем аккаунт в список пользователей
         Save_User().add_user(name=self.Login_input_2.text(),
                              password=self.Password_input_2.text())
+
         self.Add_UsersList()
 
         # Уведомляем пользователя об успешной регистрации
