@@ -25,8 +25,8 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QTabWidget" name="Interface_Widget">
+    <item row="0" column="1">
+     <widget class="QTabWidget" name="Menu_widget">
       <property name="tabPosition">
        <enum>QTabWidget::West</enum>
       </property>
@@ -35,54 +35,208 @@
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
-        <string>Clear Mode</string>
+        <string>Clear Mod</string>
        </attribute>
-       <widget class="QWidget" name="layoutWidget">
+       <widget class="QWidget" name="verticalLayoutWidget">
         <property name="geometry">
          <rect>
-          <x>9</x>
-          <y>9</y>
-          <width>443</width>
-          <height>170</height>
+          <x>10</x>
+          <y>0</y>
+          <width>571</width>
+          <height>401</height>
          </rect>
         </property>
-        <layout class="QVBoxLayout" name="Start_layout">
+        <layout class="QVBoxLayout" name="verticalLayout_13">
          <item>
-          <widget class="QLabel" name="start_label">
-           <property name="text">
-            <string>Выберите способ запуска</string>
+          <widget class="QGroupBox" name="CMStart_groupBox">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
            </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>150</height>
+            </size>
+           </property>
+           <property name="title">
+            <string>Запуск Clear Mod</string>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_14">
+            <item row="0" column="0">
+             <layout class="QVBoxLayout" name="Start_layout">
+              <item>
+               <widget class="QLabel" name="start_label">
+                <property name="text">
+                 <string>Выберите способ запуска</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="LighTheam_radioButton">
+                <property name="text">
+                 <string>Светлая тема</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QRadioButton" name="DarkTheam_radioButton">
+                <property name="text">
+                 <string>Тёмная тема</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="reboot_checkBox">
+                <property name="text">
+                 <string>Снять перманентный бан и перезагрузить компьютер</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="Start_button">
+                <property name="text">
+                 <string>Старт</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
           </widget>
          </item>
          <item>
-          <widget class="QRadioButton" name="LighTheam_radioButton">
-           <property name="text">
-            <string>Светлая тема</string>
+          <widget class="QGroupBox" name="Additionally_groupBox">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
            </property>
-           <property name="checked">
-            <bool>true</bool>
+           <property name="title">
+            <string>Допполнительно</string>
            </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QRadioButton" name="DarkTheam_radioButton">
-           <property name="text">
-            <string>Тёмная тема</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="reboot_checkBox">
-           <property name="text">
-            <string>Снять перманентный бан и перезагрузить компьютер</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="Start_button">
-           <property name="text">
-            <string>Старт</string>
-           </property>
+           <layout class="QGridLayout" name="gridLayout_15">
+            <item row="2" column="0">
+             <widget class="QTabWidget" name="Additionally_buttons">
+              <property name="currentIndex">
+               <number>0</number>
+              </property>
+              <widget class="QWidget" name="tab_9">
+               <attribute name="title">
+                <string>Рабочий стол</string>
+               </attribute>
+               <layout class="QGridLayout" name="gridLayout_16">
+                <item row="0" column="0">
+                 <widget class="QPushButton" name="ShortcutCreate_button">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>15</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Создать ярлык на рабочем столе</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QPushButton" name="ShortcutDelete_button">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>15</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Удалить ярлык с рабочего стола</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+              <widget class="QWidget" name="tab_10">
+               <attribute name="title">
+                <string>Удаление файлов (опасно)</string>
+               </attribute>
+               <layout class="QGridLayout" name="gridLayout_17">
+                <item row="0" column="0">
+                 <widget class="QPushButton" name="ClearAllData_button">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>15</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Стереть все данные Clear Mod</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QPushButton" name="ClearAppdata_button">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>15</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Отчистить AppData</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QPushButton" name="Uninstall_button">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>15</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Удалить Clear Mod</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
         </layout>
@@ -865,6 +1019,59 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="widget">
+       <attribute name="title">
+        <string>Контакты</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_11">
+        <item row="1" column="0">
+         <widget class="QTabWidget" name="Contacts_widget">
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="tab_7">
+           <attribute name="title">
+            <string>Наш телеграмм</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_12">
+            <item row="0" column="0">
+             <widget class="QWebEngineView" name="telegram_url">
+              <property name="url">
+               <url>
+                <string>https://t.me/clrmod</string>
+               </url>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_8">
+           <attribute name="title">
+            <string>Поддержать проект</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_13">
+            <item row="0" column="0">
+             <widget class="QWebEngineView" name="Donate_url">
+              <property name="url">
+               <url>
+                <string>https://qiwi.com/payment/form/99999?extra[%27accountType%27]=nickname&amp;extra[%27account%27]=FOLLS957</string>
+               </url>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QPushButton" name="ReloadContacts_button">
+          <property name="text">
+           <string>Обновить страницу</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -904,12 +1111,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>514</x>
-     <y>178</y>
+     <x>139</x>
+     <y>53</y>
     </hint>
     <hint type="destinationlabel">
-     <x>509</x>
-     <y>52</y>
+     <x>139</x>
+     <y>49</y>
     </hint>
    </hints>
   </connection>
@@ -920,12 +1127,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>612</x>
-     <y>176</y>
+     <x>139</x>
+     <y>53</y>
     </hint>
     <hint type="destinationlabel">
-     <x>612</x>
-     <y>77</y>
+     <x>139</x>
+     <y>49</y>
     </hint>
    </hints>
   </connection>
@@ -936,12 +1143,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>730</x>
-     <y>180</y>
+     <x>139</x>
+     <y>53</y>
     </hint>
     <hint type="destinationlabel">
-     <x>739</x>
-     <y>102</y>
+     <x>139</x>
+     <y>49</y>
     </hint>
    </hints>
   </connection>
@@ -952,12 +1159,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>151</x>
-     <y>197</y>
+     <x>141</x>
+     <y>42</y>
     </hint>
     <hint type="destinationlabel">
-     <x>188</x>
-     <y>47</y>
+     <x>141</x>
+     <y>42</y>
     </hint>
    </hints>
   </connection>
@@ -968,12 +1175,44 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>228</x>
-     <y>195</y>
+     <x>141</x>
+     <y>42</y>
     </hint>
     <hint type="destinationlabel">
-     <x>229</x>
-     <y>68</y>
+     <x>141</x>
+     <y>42</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ReloadContacts_button</sender>
+   <signal>clicked()</signal>
+   <receiver>telegram_url</receiver>
+   <slot>reload()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>501</x>
+     <y>33</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>501</x>
+     <y>224</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ReloadContacts_button</sender>
+   <signal>clicked()</signal>
+   <receiver>Donate_url</receiver>
+   <slot>reload()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>394</x>
+     <y>35</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>412</x>
+     <y>214</y>
     </hint>
    </hints>
   </connection>

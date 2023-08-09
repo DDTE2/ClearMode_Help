@@ -1,12 +1,12 @@
 from os.path import abspath
-from os import remove, walk
+from os import remove, walk, getenv
 from shutil import rmtree
 from json import dumps, loads
 from sqlite3 import connect
 
 
 # Класс отчистки данных пользователя
-class Clear:
+class ClearData:
     def __init__(self):
         # Определяем путь к папке с данными
         path = abspath(__file__).split('\\')[:-2]
@@ -41,6 +41,15 @@ class Clear:
 
         # Сохраняем файл куки
         db.commit()
+        db.close()
 
+def ClearAppdata(self):
+    appdata = getenv('APPDATA')
 
-Clear()
+    for path, dirnames, filenames in walk(appdata):
+        dir = path.split('\\')[-1].lower()
+        if dir in ('adobe', 'mozilla', 'macromedia', 'shararam'):
+            try:
+                rmtree(path)
+            except:
+                pass

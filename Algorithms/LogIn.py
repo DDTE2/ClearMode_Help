@@ -169,6 +169,7 @@ class Coockes:
 
         # Сохраняем файл куки
         db.commit()
+        db.close()
 
 
 class Save_User:

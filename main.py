@@ -15,6 +15,7 @@ from os import walk
 # Мои модули
 from Algorithms.AvatarList import Avatars
 from Algorithms.LogIn import *
+from Algorithms.Clear_Files import *
 
 
 class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
@@ -37,6 +38,7 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
         self.setIcon()  # Устанавливаем изображения
         self.Registration()  # Настраиваем окно регистрации
         self.Authorization()  # Настраиваем окно авторизации
+        self.Clear_Data()  # Настраиваем кнопки удаления файлов
 
         # Добавляем список пользователей в окно авторизации
         try:
@@ -46,6 +48,10 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
                 file.write('[]')
 
             self.Add_UsersList()
+
+    def Clear_Data(self):
+        self.ClearAllData_button.clicked.connect(ClearData)
+        self.ClearAppdata_button.clicked.connect(ClearAppdata)
 
     def SystemData(self):  # Отображаем системную информацию
         data = System()  # Получаем информацию о ПК

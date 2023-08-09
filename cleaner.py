@@ -1,1 +1,1 @@
-from Algorithms import Clear_Data
+from Algorithms import Clear_Files
