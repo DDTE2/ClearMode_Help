@@ -1,7 +1,6 @@
 # GUI
 pyqtdarktheme
 PyQt5
-pyqt5-tools
 pyqt-vertical-tab-widget
 PyQtWebEngine
 
