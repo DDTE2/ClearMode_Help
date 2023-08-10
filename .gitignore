@@ -1,6 +1,8 @@
 *.data
 *.pem
+*.zip
 /data/settings.json
 /data/users.json
 
+/Clear Mod
 /test
