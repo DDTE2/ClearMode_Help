@@ -1,6 +1,5 @@
 *.data
 *.pem
-*.zip
 /data/settings.json
 /data/users.json
 
