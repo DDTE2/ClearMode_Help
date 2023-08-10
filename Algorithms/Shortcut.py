@@ -20,7 +20,6 @@ class Shortcut:
             self.desktop = expanduser("~/Desktop")
         except:
             try:
-                # the above is valid on Windows (after 7) but if you want it in os normalized form:
                 self.desktop = normpath(expanduser("~/Desktop"))
             except:
                 return 'DesktopError'

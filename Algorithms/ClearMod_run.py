@@ -87,12 +87,19 @@ class ClearMod:
                 try:
                     rmtree(path + '/' + dir)
                 except Exception as error:
-                    print(dir, error)
+                    print(error)
 
     def Close(self):  # Функция завершения работы мода
         # Завершаем процесс
-        for proc in process_iter():
-            if proc.name() == 'km.exe':
-                proc.terminate()
+        proc = self.isStarted()
+        if proc:
+            proc.terminate()
 
         self.Delete()  # Удаляем лишние файлы
+
+    def isStarted(self):
+        for proc in process_iter():
+            if proc.name() == 'km.exe':
+                return proc
+        return False
+

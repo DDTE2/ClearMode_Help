@@ -55,11 +55,14 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
 
         self.Uninstall_button.clicked.connect(self.Delete_Message)
 
-    def Delete_Message(self):
+    def Delete_Message(self):  # Окно удаления мода
+        # Уточняем у пользователя, хочет ли он удалить мод
         res = QMessageBox.question(self, 'Удаление Clear Mod',
-                                   'Вы действительно хотите удалить Clear Mod\nи все его компоненты?',
+                                   'Вы действительно хотите удалить Clear Mod и все его компоненты?',
                                    QMessageBox.Yes | QMessageBox.No)
+
         if res == QMessageBox.Yes:
+            # Удаляем мод
             self.close()
             Delete_All()
 
@@ -168,9 +171,18 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
         reboot = self.settings['run']['reboot'] = self.reboot_checkBox.isChecked()
         self.SaveSattings()
 
-        CM = ClearMod(theam, reboot)
-        CM.Close()
-        CM.Run()
+        try:
+            with open(self.path + '/data/users.json', 'r') as file:
+                if file.read() != '[]':
+                    self.Start_Massege_label.setText('')
+
+                    CM = ClearMod(theam, reboot)
+                    CM.Close()
+                    CM.Run()
+                else:
+                    self.Start_Massege_label.setText('У Вас нет аккаунта в игре!')
+        except:
+            self.Start_Massege_label.setText('У Вас нет аккаунта в игре!')
 
     def Registration(self):  # Меню регистрации
         # Назначаем функцию на кнопку показа паороля

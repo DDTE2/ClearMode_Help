@@ -254,17 +254,17 @@
               </widget>
              </widget>
             </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="Start_Massege_label">
-              <property name="styleSheet">
-               <string notr="true">color: lightblue;</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </item>
            </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="Start_Massege_label">
+           <property name="styleSheet">
+            <string notr="true">color:red;</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
           </widget>
          </item>
         </layout>

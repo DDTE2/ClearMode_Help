@@ -12,6 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from pyqt_vertical_tab_widget import VerticalTabWidget
 from PyQt5 import QtWebEngineWidgets
 
+
 class Ui_ClearMod_Window(object):
     def setupUi(self, ClearMod_Window):
         ClearMod_Window.setObjectName("ClearMod_Window")
@@ -30,7 +31,7 @@ class Ui_ClearMod_Window(object):
         self.tab = QtWidgets.QWidget()
         self.tab.setObjectName("tab")
         self.verticalLayoutWidget = QtWidgets.QWidget(self.tab)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(10, 10, 611, 358))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(10, 10, 611, 401))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.verticalLayout_13 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout_13.setContentsMargins(0, 0, 0, 0)
@@ -126,17 +127,6 @@ class Ui_ClearMod_Window(object):
         self.Uninstall_button.setFont(font)
         self.Uninstall_button.setObjectName("Uninstall_button")
         self.gridLayout_17.addWidget(self.Uninstall_button, 2, 0, 1, 1)
-        self.ClearAllData_button = QtWidgets.QPushButton(self.tab_10)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.ClearAllData_button.sizePolicy().hasHeightForWidth())
-        self.ClearAllData_button.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(15)
-        self.ClearAllData_button.setFont(font)
-        self.ClearAllData_button.setObjectName("ClearAllData_button")
-        self.gridLayout_17.addWidget(self.ClearAllData_button, 0, 0, 1, 1)
         self.ClearAppdata_button = QtWidgets.QPushButton(self.tab_10)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -148,9 +138,25 @@ class Ui_ClearMod_Window(object):
         self.ClearAppdata_button.setFont(font)
         self.ClearAppdata_button.setObjectName("ClearAppdata_button")
         self.gridLayout_17.addWidget(self.ClearAppdata_button, 1, 0, 1, 1)
+        self.ClearAllData_button = QtWidgets.QPushButton(self.tab_10)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.ClearAllData_button.sizePolicy().hasHeightForWidth())
+        self.ClearAllData_button.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(15)
+        self.ClearAllData_button.setFont(font)
+        self.ClearAllData_button.setObjectName("ClearAllData_button")
+        self.gridLayout_17.addWidget(self.ClearAllData_button, 0, 0, 1, 1)
         self.Additionally_buttons.addTab(self.tab_10, "")
         self.gridLayout_15.addWidget(self.Additionally_buttons, 0, 0, 1, 1)
         self.verticalLayout_13.addWidget(self.Additionally_groupBox)
+        self.Start_Massege_label = QtWidgets.QLabel(self.verticalLayoutWidget)
+        self.Start_Massege_label.setStyleSheet("color:red;")
+        self.Start_Massege_label.setText("")
+        self.Start_Massege_label.setObjectName("Start_Massege_label")
+        self.verticalLayout_13.addWidget(self.Start_Massege_label)
         self.Menu_widget.addTab(self.tab, "")
         self.tab_3 = QtWidgets.QWidget()
         self.tab_3.setObjectName("tab_3")
@@ -638,7 +644,8 @@ class Ui_ClearMod_Window(object):
         self.gridLayout_13 = QtWidgets.QGridLayout(self.tab_8)
         self.gridLayout_13.setObjectName("gridLayout_13")
         self.Donate_url = QtWebEngineWidgets.QWebEngineView(self.tab_8)
-        self.Donate_url.setUrl(QtCore.QUrl("https://qiwi.com/payment/form/99999?extra[%27accountType%27]=nickname&extra[%27account%27]=FOLLS957"))
+        self.Donate_url.setUrl(QtCore.QUrl(
+            "https://qiwi.com/payment/form/99999?extra[%27accountType%27]=nickname&extra[%27account%27]=FOLLS957"))
         self.Donate_url.setObjectName("Donate_url")
         self.gridLayout_13.addWidget(self.Donate_url, 0, 0, 1, 1)
         self.Contacts_widget.addTab(self.tab_8, "")
@@ -652,14 +659,14 @@ class Ui_ClearMod_Window(object):
         self.Additionally_buttons.setCurrentIndex(0)
         self.Avatar_widget.setCurrentIndex(0)
         self.Contacts_widget.setCurrentIndex(0)
-        self.ReloadItems_button.clicked.connect(self.InstantList.reload) # type: ignore
-        self.ClearData_button.clicked.connect(self.Login_input.clear) # type: ignore
-        self.ClearData_button.clicked.connect(self.Password_input.clear) # type: ignore
-        self.ClearData_button.clicked.connect(self.Referal_input.clear) # type: ignore
-        self.ClearData_button_2.clicked.connect(self.Login_input_2.clear) # type: ignore
-        self.ClearData_button_2.clicked.connect(self.Password_input_2.clear) # type: ignore
-        self.ReloadContacts_button.clicked.connect(self.telegram_url.reload) # type: ignore
-        self.ReloadContacts_button.clicked.connect(self.Donate_url.reload) # type: ignore
+        self.ReloadItems_button.clicked.connect(self.InstantList.reload)  # type: ignore
+        self.ClearData_button.clicked.connect(self.Login_input.clear)  # type: ignore
+        self.ClearData_button.clicked.connect(self.Password_input.clear)  # type: ignore
+        self.ClearData_button.clicked.connect(self.Referal_input.clear)  # type: ignore
+        self.ClearData_button_2.clicked.connect(self.Login_input_2.clear)  # type: ignore
+        self.ClearData_button_2.clicked.connect(self.Password_input_2.clear)  # type: ignore
+        self.ReloadContacts_button.clicked.connect(self.telegram_url.reload)  # type: ignore
+        self.ReloadContacts_button.clicked.connect(self.Donate_url.reload)  # type: ignore
         QtCore.QMetaObject.connectSlotsByName(ClearMod_Window)
 
     def retranslateUi(self, ClearMod_Window):
@@ -674,11 +681,13 @@ class Ui_ClearMod_Window(object):
         self.Additionally_groupBox.setTitle(_translate("ClearMod_Window", "Допполнительно"))
         self.ShortcutCreate_button.setText(_translate("ClearMod_Window", "Создать ярлык на рабочем столе"))
         self.ShortcutDelete_button.setText(_translate("ClearMod_Window", "Удалить ярлык с рабочего стола"))
-        self.Additionally_buttons.setTabText(self.Additionally_buttons.indexOf(self.tab_9), _translate("ClearMod_Window", "Рабочий стол"))
+        self.Additionally_buttons.setTabText(self.Additionally_buttons.indexOf(self.tab_9),
+                                             _translate("ClearMod_Window", "Рабочий стол"))
         self.Uninstall_button.setText(_translate("ClearMod_Window", "Удалить Clear Mod"))
-        self.ClearAllData_button.setText(_translate("ClearMod_Window", "Стереть все данные Clear Mod"))
         self.ClearAppdata_button.setText(_translate("ClearMod_Window", "Отчистить AppData"))
-        self.Additionally_buttons.setTabText(self.Additionally_buttons.indexOf(self.tab_10), _translate("ClearMod_Window", "Удаление файлов (опасно)"))
+        self.ClearAllData_button.setText(_translate("ClearMod_Window", "Стереть все данные Clear Mod"))
+        self.Additionally_buttons.setTabText(self.Additionally_buttons.indexOf(self.tab_10),
+                                             _translate("ClearMod_Window", "Удаление файлов (опасно)"))
         self.Menu_widget.setTabText(self.Menu_widget.indexOf(self.tab), _translate("ClearMod_Window", "Clear Mod"))
         self.Data_box.setTitle(_translate("ClearMod_Window", "Данные"))
         self.Login_label.setText(_translate("ClearMod_Window", "Имя"))
@@ -689,13 +698,17 @@ class Ui_ClearMod_Window(object):
         self.ClearData_button.setText(_translate("ClearMod_Window", "Отчистить"))
         self.Avatar_groupBox.setTitle(_translate("ClearMod_Window", "Аватар"))
         self.LeftPublicAvatar_button.setText(_translate("ClearMod_Window", "..."))
-        self.PublicAvatar_image.setText(_translate("ClearMod_Window", "<html><head/><body><p align=\"center\"><img src=\":/Public/Public/8.png\"/></p></body></html>"))
+        self.PublicAvatar_image.setText(_translate("ClearMod_Window",
+                                                   "<html><head/><body><p align=\"center\"><img src=\":/Public/Public/8.png\"/></p></body></html>"))
         self.RightPublicAvatar_button.setText(_translate("ClearMod_Window", "..."))
-        self.Avatar_widget.setTabText(self.Avatar_widget.indexOf(self.widget), _translate("ClearMod_Window", "Общедоступные образы"))
+        self.Avatar_widget.setTabText(self.Avatar_widget.indexOf(self.widget),
+                                      _translate("ClearMod_Window", "Общедоступные образы"))
         self.LeftSecretAvatar_button.setText(_translate("ClearMod_Window", "..."))
-        self.SecretAvatar_image.setText(_translate("ClearMod_Window", "<html><head/><body><p align=\"center\"><img src=\":/Secret/Secret/0.png\"/></p></body></html>"))
+        self.SecretAvatar_image.setText(_translate("ClearMod_Window",
+                                                   "<html><head/><body><p align=\"center\"><img src=\":/Secret/Secret/0.png\"/></p></body></html>"))
         self.RightSecretAvatar_button.setText(_translate("ClearMod_Window", "..."))
-        self.Avatar_widget.setTabText(self.Avatar_widget.indexOf(self.tab_5), _translate("ClearMod_Window", "Прочие образы"))
+        self.Avatar_widget.setTabText(self.Avatar_widget.indexOf(self.tab_5),
+                                      _translate("ClearMod_Window", "Прочие образы"))
         self.RegButtons_groupBox.setTitle(_translate("ClearMod_Window", "Регистрация"))
         self.CheckData_button.setText(_translate("ClearMod_Window", "Проверить данные"))
         self.Reg_button.setText(_translate("ClearMod_Window", "Зарегистрироваться"))
@@ -728,13 +741,16 @@ class Ui_ClearMod_Window(object):
         self.ReloadItems_button.setText(_translate("ClearMod_Window", "Обновить страницу"))
         self.Menu_widget.setTabText(self.Menu_widget.indexOf(self.tab_4), _translate("ClearMod_Window", "Список вещей"))
         self.ReloadContacts_button.setText(_translate("ClearMod_Window", "Обновить страницу"))
-        self.Contacts_widget.setTabText(self.Contacts_widget.indexOf(self.tab_7), _translate("ClearMod_Window", "Наш телеграмм"))
-        self.Contacts_widget.setTabText(self.Contacts_widget.indexOf(self.tab_8), _translate("ClearMod_Window", "Поддержать проект"))
+        self.Contacts_widget.setTabText(self.Contacts_widget.indexOf(self.tab_7),
+                                        _translate("ClearMod_Window", "Наш телеграмм"))
+        self.Contacts_widget.setTabText(self.Contacts_widget.indexOf(self.tab_8),
+                                        _translate("ClearMod_Window", "Поддержать проект"))
         self.Menu_widget.setTabText(self.Menu_widget.indexOf(self.widget1), _translate("ClearMod_Window", "Контакты"))
 
 
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     ClearMod_Window = QtWidgets.QMainWindow()
     ui = Ui_ClearMod_Window()

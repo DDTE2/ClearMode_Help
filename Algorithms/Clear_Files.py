@@ -3,6 +3,7 @@ from os import remove, walk, getenv
 from shutil import rmtree
 from json import dumps, loads
 from sqlite3 import connect
+from Algorithms.ClearMod_run import ClearMod
 
 
 # Класс отчистки данных пользователя
@@ -12,10 +13,13 @@ class ClearData:
         path = abspath(__file__).split('\\')[:-2]
         self.path = '\\'.join(path + ['data'])
 
-        # Удаляем файлы
-        self.Delite_Files()
-        # Чистим куки
-        self.Clear_Cookies()
+        # Удаляем файлы Clear Mod
+        CM = ClearMod()
+        if not CM.isStarted():
+            CM.Delete()
+
+        self.Delite_Files()  # Удаляем данные
+        self.Clear_Cookies()  # Чистим куки
 
     def Delite_Files(self):  # Удаляем лишние файлы
         for path, dirs, files in walk(self.path):
@@ -42,6 +46,7 @@ class ClearData:
         # Сохраняем файл куки
         db.commit()
         db.close()
+
 
 def ClearAppdata():
     appdata = getenv('APPDATA')
