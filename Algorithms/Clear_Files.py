@@ -43,7 +43,7 @@ class ClearData:
         db.commit()
         db.close()
 
-def ClearAppdata(self):
+def ClearAppdata():
     appdata = getenv('APPDATA')
 
     for path, dirnames, filenames in walk(appdata):

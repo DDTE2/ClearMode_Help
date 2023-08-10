@@ -1,4 +1,4 @@
-from os import getenv, walk, system
+from os import getenv, walk, system, remove
 from os.path import abspath, exists
 from shutil import rmtree, move
 from zipfile import ZipFile
@@ -19,7 +19,6 @@ class ClearMod:
             self.path = '\\'.join(path + ['Clear Mod'])
 
             self.theam = theam
-            self.Run()
 
     def ClearAppdata(self):
         appdata = getenv('APPDATA')
@@ -33,6 +32,7 @@ class ClearMod:
                     pass
 
     def Run(self):
+        print(2)
         # Удаляем не удалённые папки
         if exists(self.path + '/cache'):
             rmtree(self.path + '/cache')
@@ -73,5 +73,20 @@ class ClearMod:
             subprocess.call(self.path + '/mode/km.exe')
         except Exception as error:
             print(error)
+
+    def Delete(self):# Удаляем лишние папки и файлы
+        for path, dirnames, filenames in walk(self.path):
+            for file in filenames:
+                if not (file in {'mode.zip', 'skeleton.zip'}):
+                    try:
+                        remove(self.path + '/' + file)
+                    except:
+                        pass
+            for dir in dirnames:
+                try:
+                    rmtree(path + '/' + dir)
+                except:
+                    pass
+
 
 

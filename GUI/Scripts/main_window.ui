@@ -31,7 +31,7 @@
        <enum>QTabWidget::West</enum>
       </property>
       <property name="currentIndex">
-       <number>5</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -196,6 +196,24 @@
                 <string>Удаление файлов (опасно)</string>
                </attribute>
                <layout class="QGridLayout" name="gridLayout_17">
+                <item row="2" column="0">
+                 <widget class="QPushButton" name="Uninstall_button">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>15</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Удалить Clear Mod</string>
+                  </property>
+                 </widget>
+                </item>
                 <item row="0" column="0">
                  <widget class="QPushButton" name="ClearAllData_button">
                   <property name="sizePolicy">
@@ -1023,7 +1041,7 @@
         <item row="1" column="0">
          <widget class="QTabWidget" name="Contacts_widget">
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="tab_7">
            <attribute name="title">
@@ -1057,7 +1075,7 @@
              <widget class="QWebEngineView" name="Donate_url">
               <property name="url">
                <url>
-                <string>https://qiwi.com/n/FOLLS957</string>
+                <string>https://qiwi.com/payment/form/99999?extra[%27accountType%27]=nickname&amp;extra[%27account%27]=FOLLS957</string>
                </url>
               </property>
              </widget>

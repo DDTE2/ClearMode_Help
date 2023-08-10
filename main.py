@@ -16,8 +16,8 @@ from os import walk
 from Algorithms.AvatarList import Avatars
 from Algorithms.LogIn import *
 from Algorithms.Clear_Files import *
-from Algorithms.Shortcut import *
 from Algorithms.ClearMod_run import ClearMod
+from Algorithms.Shortcut import Shortcut
 
 
 class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
@@ -41,7 +41,7 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
         self.Registration()  # Настраиваем окно регистрации
         self.Authorization()  # Настраиваем окно авторизации
         self.Clear_Data()  # Настраиваем кнопки удаления файлов
-        self.Shortcut()
+        self.Shortcut()  # Настраиваем кнопки создания ярлыков
 
         # Добавляем список пользователей в окно авторизации
         try:
@@ -52,34 +52,31 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
 
             self.Add_UsersList()
 
-    def Shortcut(self):
-        self.ShortcutCreate_button.clicked.connect(self.add_Shortcut)
-        self.ShortcutDelete_button.clicked.connect(self.Del_Shortcut)
+    def Shortcut(self):  # Настраиваем кнопки создания ярлыков
+        self.shortcut = Shortcut()
 
-        shortcut = Shortcut()
-
-        if shortcut.Check_System():
-            if shortcut.Check_Shortcut():
+        # Проверяем операционную систему и создан ли уже ярлык
+        if not self.shortcut.Check_System():
+            self.ShortcutCreate_button.setEnabled(False)
+            self.ShortcutDelete_button.setEnabled(False)
+        else:
+            if self.shortcut.Check_Shortcut():
                 self.ShortcutCreate_button.setEnabled(False)
                 self.ShortcutDelete_button.setEnabled(True)
             else:
                 self.ShortcutCreate_button.setEnabled(True)
                 self.ShortcutDelete_button.setEnabled(False)
 
+        # Назначем действия на кнопки
+        self.ShortcutCreate_button.clicked.connect(lambda: self.Shortcut_action('create'))
+        self.ShortcutDelete_button.clicked.connect(lambda: self.Shortcut_action('delete'))
+
+    def Shortcut_action(self, action):# Функция работы с ярлыками на рабочем столе
+        print(self.shortcut.desktop)
+        if action == 'create':
+            self.shortcut.Create()
         else:
-            self.ShortcutCreate_button.setEnabled(False)
-            self.ShortcutDelete_button.setEnabled(False)
-
-    def Del_Shortcut(self):
-        shortcut = Shortcut()
-
-        shortcut.Delete()
-        self.Shortcut()
-
-    def add_Shortcut(self):
-        shortcut = Shortcut()
-
-        shortcut.Create()
+            self.shortcut.Delete()
         self.Shortcut()
 
     def Clear_Data(self):
@@ -148,20 +145,22 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
         else:
             self.reboot_checkBox.setChecked(False)
 
-        self.Start_button.clicked.connect(self.ClearMode_RunMenu)
+        self.Start_button.clicked.connect(self.ClearMod_RunMenu)
 
-    def ClearMode_RunMenu(self):  # Меню запуска Clear Mod
+    def ClearMod_RunMenu(self):  # Меню запуска Clear Mod
         # Сораняем настройки
         if self.LighTheam_radioButton.isChecked():
             theam = 'light'
         else:
             theam = 'dark'
-
         self.settings['run'] = {'theam': theam}
-        reboot = self.settings['run']['reboot'] = self.reboot_checkBox.isChecked()
 
-        self.SaveSettings()
-        self.Start_button.clicked.connect(lambda: ClearMod(theam, reboot))
+        reboot = self.settings['run']['reboot'] = self.reboot_checkBox.isChecked()
+        self.SaveSattings()
+
+        CM = ClearMod(theam, reboot)
+        CM.Delete()
+        CM.Run()
 
     def Registration(self):  # Меню регистрации
         # Назначаем функцию на кнопку показа паороля
@@ -204,7 +203,7 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
         except:
             self.settings = {'run': {'theam': 'light', 'reboot': False}}
 
-    def SaveSettings(self):  # Сохраняем настройки пользователя
+    def SaveSattings(self):  # Сохраняем настройки пользователя
         with open(self.path + '/data/settings.json', 'w') as file:
             file.write(dumps(self.settings, indent=4))
 
@@ -212,7 +211,9 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
         super(QtWidgets.QMainWindow, self).closeEvent(*args, **kwargs)
 
         # Созраняем данные
-        self.SaveSettings()
+        self.SaveSattings()
+
+        ClearMod().Delete()
 
     def setIcon(self):  # Назначеам изображения
         # Устанавливаем иконку мода
