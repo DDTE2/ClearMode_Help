@@ -1,7 +1,6 @@
 from os.path import abspath
 from os import remove, walk, getenv
 from shutil import rmtree
-from json import dumps, loads
 from sqlite3 import connect
 from Algorithms.ClearMod_run import ClearMod
 

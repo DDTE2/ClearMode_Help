@@ -3,7 +3,7 @@ from platform import system, release  # Версия системы
 from json import dumps  # Форматирование данных
 from requests import get  # GET-запросы
 # Работа с папками
-from os.path import abspath, exists
+from os.path import exists
 from os import getenv
 from psutil import process_iter  # Список процессов
 
