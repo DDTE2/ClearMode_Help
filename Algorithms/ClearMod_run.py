@@ -3,6 +3,7 @@ from os.path import abspath, exists
 from shutil import rmtree, move
 from zipfile import ZipFile
 import subprocess
+from psutil import process_iter
 
 
 class ClearMod:
@@ -32,7 +33,6 @@ class ClearMod:
                     pass
 
     def Run(self):
-        print(2)
         # Удаляем не удалённые папки
         if exists(self.path + '/cache'):
             rmtree(self.path + '/cache')
@@ -74,8 +74,9 @@ class ClearMod:
         except Exception as error:
             print(error)
 
-    def Delete(self):# Удаляем лишние папки и файлы
+    def Delete(self):  # Удаляем лишние папки и файлы
         for path, dirnames, filenames in walk(self.path):
+            print(dirnames)
             for file in filenames:
                 if not (file in {'mode.zip', 'skeleton.zip'}):
                     try:
@@ -85,8 +86,13 @@ class ClearMod:
             for dir in dirnames:
                 try:
                     rmtree(path + '/' + dir)
-                except:
-                    pass
+                except Exception as error:
+                    print(dir, error)
 
+    def Close(self):  # Функция завершения работы мода
+        # Завершаем процесс
+        for proc in process_iter():
+            if proc.name() == 'km.exe':
+                proc.terminate()
 
-
+        self.Delete()  # Удаляем лишние файлы

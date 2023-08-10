@@ -1,5 +1,5 @@
 # GUI
-from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QApplication, QMessageBox
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtCore import Qt
 import qdarktheme
@@ -18,6 +18,7 @@ from Algorithms.LogIn import *
 from Algorithms.Clear_Files import *
 from Algorithms.ClearMod_run import ClearMod
 from Algorithms.Shortcut import Shortcut
+from Algorithms.Delete import Delete_All
 
 
 class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
@@ -52,6 +53,16 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
 
             self.Add_UsersList()
 
+        self.Uninstall_button.clicked.connect(self.Delete_Message)
+
+    def Delete_Message(self):
+        res = QMessageBox.question(self, 'Удаление Clear Mod',
+                                   'Вы действительно хотите удалить Clear Mod\nи все его компоненты?',
+                                   QMessageBox.Yes | QMessageBox.No)
+        if res == QMessageBox.Yes:
+            self.close()
+            Delete_All()
+
     def Shortcut(self):  # Настраиваем кнопки создания ярлыков
         self.shortcut = Shortcut()
 
@@ -71,7 +82,7 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
         self.ShortcutCreate_button.clicked.connect(lambda: self.Shortcut_action('create'))
         self.ShortcutDelete_button.clicked.connect(lambda: self.Shortcut_action('delete'))
 
-    def Shortcut_action(self, action):# Функция работы с ярлыками на рабочем столе
+    def Shortcut_action(self, action):  # Функция работы с ярлыками на рабочем столе
         if action == 'create':
             self.shortcut.Create()
         else:
@@ -158,7 +169,7 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
         self.SaveSattings()
 
         CM = ClearMod(theam, reboot)
-        CM.Delete()
+        CM.Close()
         CM.Run()
 
     def Registration(self):  # Меню регистрации
@@ -212,7 +223,7 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
         # Созраняем данные
         self.SaveSattings()
 
-        ClearMod().Delete()
+        ClearMod().Close()
 
     def setIcon(self):  # Назначеам изображения
         # Устанавливаем иконку мода
@@ -267,8 +278,7 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
         user.get_RandomUser()
 
         self.Login_input.setText(user.name)
-        if len(self.Password_input.text()) < 4:
-            self.Password_input.setText(user.password)
+        self.Password_input.setText(user.password)
 
     def Check_RegData(self):  # Функция проверки данных для регистрации
         # Копируем логин и пароль
