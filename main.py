@@ -72,7 +72,6 @@ class Window(QtWidgets.QMainWindow, Ui_ClearMod_Window):
         self.ShortcutDelete_button.clicked.connect(lambda: self.Shortcut_action('delete'))
 
     def Shortcut_action(self, action):# Функция работы с ярлыками на рабочем столе
-        print(self.shortcut.desktop)
         if action == 'create':
             self.shortcut.Create()
         else:
