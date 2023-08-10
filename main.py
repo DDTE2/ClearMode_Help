@@ -7,11 +7,6 @@ from GUI.Scripts.main_window import Ui_ClearMod_Window
 import sys
 # Данные о ПК
 from Algorithms.SystemData import System
-from os.path import abspath
-# Формат данных
-from json import dumps, loads
-# Работа с файлами
-from os import walk
 # Мои модули
 from Algorithms.AvatarList import Avatars
 from Algorithms.LogIn import *

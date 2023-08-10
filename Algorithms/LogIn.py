@@ -87,7 +87,6 @@ def Authorization(name='', password=''):  # Функция авторизаци�
                 return 'WromgPassword_Error'
 
             case _:
-                print(result.content.decode())
                 return False
 
     except:

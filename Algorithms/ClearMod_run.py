@@ -76,7 +76,6 @@ class ClearMod:
 
     def Delete(self):  # Удаляем лишние папки и файлы
         for path, dirnames, filenames in walk(self.path):
-            print(dirnames)
             for file in filenames:
                 if not (file in {'mode.zip', 'skeleton.zip'}):
                     try:
